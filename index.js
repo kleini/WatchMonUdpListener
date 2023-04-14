@@ -45,7 +45,7 @@ catch (e) {
 
 
 var debug = (config.config.debug) ? config.config.debug : false;
-var debugMQTT = (config.config.debugmqtt) ? config.config.debugmqtt : false;;
+var debugMQTT = (config.config.debugmqtt) ? config.config.debugmqtt : false;
 
 
 
@@ -63,7 +63,7 @@ var influxenabled = (config.config.influxenabled) ? config.config.influxenabled 
 
 //Setup MQTT
 options={
-	clientId:"raspi",
+	clientId:"watchmonlistener",
 	username:mqttusername,
 	password:mqttpassword,
 	clean:true};
@@ -71,6 +71,8 @@ options={
 var client;
 
 if(mqttenabled) {
+
+	console.log('Connectiong to mqtt at ' + mqtthost);	
 	client  = mqtt.connect('mqtt://' + mqtthost, options)
 	client.on("error",function(error){
 		console.log("Can't connect to MQTT server" + error);
@@ -88,7 +90,7 @@ const influx = new Influx.InfluxDB({
   port: 8086,
   username: influxusername,
   password: influxpassword,
-})
+});
 
 console.log('Influx host set to: ' + influxhost);
 
@@ -236,7 +238,7 @@ server.on('listening',function(){
   var port = address.port;
   var family = address.family;
   var ipaddr = address.address;
-  console.log('Batrium logger Server is listening at port' + port);
+  console.log('Batrium logger Server is listening at port ' + port);
 });
 
 //emits after the socket is closed using socket.close();
