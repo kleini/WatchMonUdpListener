@@ -1,6 +1,9 @@
-FROM node:23-alpine
+FROM docker.io/library/node:23-alpine
 WORKDIR /app
-COPY . .
+COPY package.json .
+COPY package-lock.json .
+COPY index.js .
+COPY payload payload
 COPY config.json_dist config/config.json
 RUN npm install --production
 RUN npm install -g @vercel/ncc
